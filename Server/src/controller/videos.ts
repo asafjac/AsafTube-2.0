@@ -1,9 +1,16 @@
 import { Request, Response } from "express";
-import { uploadVideo as uploadVideoRepo } from "../repository/videos";
+import { uploadVideo as uploadVideoManager } from "../manager/videos";
 
-export const uploadVideo = async ({ body, file }: Request, res: Response) => {
-  console.log(body.title);
-  console.log(file);
+export const uploadVideo = async (
+  { body, file }: Request,
+  res: Response,
+): Promise<void> => {
+  if (!file) {
+    res.status(400).send("No file uploaded.");
+    return;
+  }
 
-  // await uploadVideoRepo(body.title);
+  await uploadVideoManager(file, body.title);
+
+  res.status(200).send("Video uploaded successfully.");
 };
