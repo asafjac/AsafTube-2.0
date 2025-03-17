@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { uploadVideos } from "../controller/videos";
 import multer from "multer";
+
 export const upload = multer({
   dest: "uploads/",
 });

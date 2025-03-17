@@ -20,7 +20,23 @@ export const uploadVideos = async (
     return;
   }
 
-  await uploadMultipleVideos(files, body.titles);
+  res.setHeader("Content-Type", "text/event-stream");
+  res.setHeader("Cache-Control", "no-cache");
+  res.setHeader("Connection", "keep-alive");
 
-  res.status(200).send("Video uploaded successfully.");
+  res.flushHeaders();
+
+  const amountOfStages = 6; // Amount of stages in the upload process, saved in order to calculate the step size
+  const stepSize = 100 / files.length / amountOfStages; // Calculate the step size based on the amount of files and stages
+  const sendEvent = () => {
+    res.write(`data: ${stepSize}\n\n`);
+  };
+
+  await uploadMultipleVideos(files, body.titles, sendEvent)
+    .catch((err) =>
+      res.write(`data: Error occurred during video upload: ${err}\n\n`),
+    )
+    .finally(() => {
+      res.end();
+    });
 };
