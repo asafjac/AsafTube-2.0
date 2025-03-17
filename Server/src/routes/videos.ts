@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { uploadVideo } from "../controller/videos";
+import { uploadVideos } from "../controller/videos";
 import multer from "multer";
 export const upload = multer({
   dest: "uploads/",
@@ -7,4 +7,4 @@ export const upload = multer({
 
 export const videosRouter = Router();
 
-videosRouter.post("/", upload.single("video"), uploadVideo);
+videosRouter.post("/", upload.array("videos"), uploadVideos);
