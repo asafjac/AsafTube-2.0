@@ -13,7 +13,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.get("/isalive", (req, res) => {
-  res.send(env.DATABASE_URL);
+  res.send(env.TEST);
   // res.send(Date.now().toString());
 });
 
