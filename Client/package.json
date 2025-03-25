@@ -4,10 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "Asaf Tube 2.0 Client/node_modules/.bin/vite",
-    "build": "Asaf Tube 2.0 Client/node_modules/.bin/tsc -b && vite build",
-    "lint": "Asaf Tube 2.0 Client/node_modules/.bin/eslint .",
-    "preview": "Asaf Tube 2.0 Client/node_modules/.bin/vite preview"
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
   },
   "dependencies": {
     "react": "^19.0.0",
