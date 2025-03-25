@@ -4,7 +4,6 @@ import { videosRouter } from "./routes/videos";
 import bodyParser from "body-parser";
 import postgres from "postgres";
 import cors from "cors";
-import * as process from "process";
 
 const app = express();
 const port = env.PORT;
@@ -14,8 +13,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.get("/isalive", (req, res) => {
-  res.send(process.env.TEST);
-  // res.send(Date.now().toString());
+  res.send(Date.now().toString());
 });
 
 app.use("/videos", videosRouter);
