@@ -1,7 +1,7 @@
 import { ThumbnailProps } from "../thumbnail/types.ts";
 
 export type CarouselProps = {
-  thumbnails: ThumbnailProps[];
+  thumbnails: Omit<ThumbnailProps, "width">[];
 };
 
 export type stylesProps = {
