@@ -1,14 +1,19 @@
 import { createUseStyles } from "react-jss";
+import { stylesClasses, stylesProps } from "./types.ts";
 
-export const useStyles = createUseStyles({
+export const useStyles = createUseStyles<stylesClasses, stylesProps>({
   thumbnail: {
+    cursor: "pointer",
+    userSelect: "none",
+    userD: "none",
+  },
+  thumbnailPhoto: ({ width }) => ({
     position: "relative",
-    width: 200,
-    height: 120,
+    width: width,
+    aspectRatio: 16 / 9,
     overflow: "hidden",
     borderRadius: 8,
-    cursor: "pointer",
-  },
+  }),
   image: {
     width: "100%",
     height: "100%",
