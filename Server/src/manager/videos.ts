@@ -2,7 +2,9 @@ import { uploadToBlob, uploadVideoToDB } from "../repository/videos";
 import ffmpeg from "fluent-ffmpeg";
 import { rmSync } from "fs";
 import { v4 } from "uuid";
+import { getAllVideos as getAllVideosRepo } from "../repository/videos";
 
+export const getAllVideos = getAllVideosRepo;
 export const uploadSingleVideo = async (
   video: Express.Multer.File,
   title: string,

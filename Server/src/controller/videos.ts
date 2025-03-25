@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { uploadMultipleVideos } from "../manager/videos";
+import { getAllVideos as getAllVideosManager } from "../manager/videos";
 
 export const uploadVideos = async (
   { body, files }: Request,
@@ -39,4 +40,13 @@ export const uploadVideos = async (
     .finally(() => {
       res.end();
     });
+};
+
+export const getAllVideos = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  const videos = await getAllVideosManager();
+
+  res.send(videos);
 };
