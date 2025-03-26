@@ -36,9 +36,13 @@ export const uploadVideos = async (
   console.log("Starting video upload");
 
   await uploadMultipleVideos(files, body.titles, sendEvent)
-    .catch((err) =>
-      res.write(`data: Error occurred during video upload: ${err}\n\n`),
-    )
+    .catch((err) => {
+      console.log(`Video upload failed with error: ${err}`);
+      res.write(`data: Error occurred during video upload: ${err}\n\n`);
+    })
+    .then(() => {
+      console.log("Video upload completed");
+    })
     .finally(() => {
       res.end();
     });
