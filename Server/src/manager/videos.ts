@@ -55,11 +55,13 @@ const generateThumbnail = (file: Express.Multer.File): Promise<string> => {
   const thumbnailFolder = "thumbnails";
   const filename = `${v4()}.png`;
 
+  const percentageToScreenshot = Math.floor(Math.random() * 101);
+
   return new Promise((resolve) =>
     ffmpeg(file.path)
       .screenshot({
         filename: filename,
-        timestamps: [0],
+        timestamps: [`${percentageToScreenshot}%`],
         count: 1,
         folder: thumbnailFolder,
       })
