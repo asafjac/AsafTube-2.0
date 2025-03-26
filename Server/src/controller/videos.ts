@@ -39,12 +39,11 @@ export const uploadVideos = async (
     .catch((err) => {
       console.log(`Video upload failed with error: ${err}`);
       res.write(`data: Error occurred during video upload: ${err}\n\n`);
-    })
-    .then(() => {
-      console.log("Video upload completed");
-    })
-    .finally(() => {
       res.end();
+    })
+    .then((videos) => {
+      console.log("Video upload completed");
+      res.end(`data: ${JSON.stringify(videos)}\n\n`);
     });
 };
 

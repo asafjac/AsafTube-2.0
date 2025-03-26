@@ -7,11 +7,12 @@ export const uploadVideoToDB = async (
   duration: number,
   videoLink: string,
   thumbnailLink: string,
-): Promise<any> => {
+) => {
   return sql`
         INSERT INTO "Videos"
             (title, duration, video_link, thumbnail)
-        VALUES (${title}, ${duration}, ${videoLink}, ${thumbnailLink});
+        VALUES (${title}, ${duration}, ${videoLink}, ${thumbnailLink})
+        RETURNING id, title, duration, upload_time, video_link, thumbnail;
     `;
 };
 

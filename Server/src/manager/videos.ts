@@ -26,7 +26,9 @@ export const uploadSingleVideo = async (
   sendEvent();
   console.log(`${title} thumbnail uploaded to blob`);
 
-  await uploadVideoToDB(title, duration, videoLink, thumbnailLink);
+  const uploadedVideo = (
+    await uploadVideoToDB(title, duration, videoLink, thumbnailLink)
+  )[0];
   sendEvent();
   console.log(`${title} uploaded to DB`);
 
@@ -35,6 +37,8 @@ export const uploadSingleVideo = async (
   rmSync(thumbnailPath);
   sendEvent();
   console.log(`${title} temp files removed`);
+
+  return uploadedVideo;
 };
 
 const getVideoDuration = (file: Express.Multer.File): Promise<number> =>
@@ -71,14 +75,14 @@ const generateThumbnail = (file: Express.Multer.File): Promise<string> => {
   );
 };
 
-export const uploadMultipleVideos = async (
+export const uploadMultipleVideos = (
   videos: Express.Multer.File[],
   titles: string[],
   sendEvent: () => void,
-) => {
-  await Promise.all(
-    titles.map(async (title, index) => {
-      await uploadSingleVideo(videos[index], title, sendEvent);
-    }),
+) =>
+  Promise.all(
+    titles.map(
+      async (title, index) =>
+        await uploadSingleVideo(videos[index], title, sendEvent),
+    ),
   );
-};
