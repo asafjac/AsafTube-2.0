@@ -7,36 +7,40 @@ import { getAllVideos as getAllVideosRepo } from "../repository/videos";
 export const getAllVideos = getAllVideosRepo;
 export const uploadSingleVideo = async (
   video: Express.Multer.File,
-  title: string,
   sendEvent: () => void,
 ) => {
   const duration = await getVideoDuration(video);
   sendEvent();
-  console.log(`Duration Extracted for ${title}`);
+  console.log(`Duration Extracted for ${video.originalname}`);
 
   const videoLink = await uploadToBlob(video.path, video.originalname);
   sendEvent();
-  console.log(`${title} been uploaded to blob`);
+  console.log(`${video.originalname} been uploaded to blob`);
 
   const thumbnailPath = await generateThumbnail(video);
   sendEvent();
-  console.log(`thumbnail generated for ${title}`);
+  console.log(`thumbnail generated for ${video.originalname}`);
 
   const thumbnailLink = await uploadToBlob(thumbnailPath, `${v4()}.png`);
   sendEvent();
-  console.log(`${title} thumbnail uploaded to blob`);
+  console.log(`${video.originalname} thumbnail uploaded to blob`);
 
   const uploadedVideo = (
-    await uploadVideoToDB(title, duration, videoLink, thumbnailLink)
+    await uploadVideoToDB(
+      video.originalname,
+      duration,
+      videoLink,
+      thumbnailLink,
+    )
   )[0];
   sendEvent();
-  console.log(`${title} uploaded to DB`);
+  console.log(`${video.originalname} uploaded to DB`);
 
   // Remove files after it has been uploaded
   rmSync(video.path);
   rmSync(thumbnailPath);
   sendEvent();
-  console.log(`${title} temp files removed`);
+  console.log(`${video.originalname} temp files removed`);
 
   return uploadedVideo;
 };
@@ -77,12 +81,8 @@ const generateThumbnail = (file: Express.Multer.File): Promise<string> => {
 
 export const uploadMultipleVideos = (
   videos: Express.Multer.File[],
-  titles: string[],
   sendEvent: () => void,
 ) =>
   Promise.all(
-    titles.map(
-      async (title, index) =>
-        await uploadSingleVideo(videos[index], title, sendEvent),
-    ),
+    videos.map(async (video) => await uploadSingleVideo(video, sendEvent)),
   );

@@ -16,11 +16,6 @@ export const uploadVideos = async (
     return;
   }
 
-  if (body.titles.length !== files.length) {
-    res.status(400).send("Number of titles does not match number of files.");
-    return;
-  }
-
   res.setHeader("Content-Type", "text/event-stream");
   res.setHeader("Cache-Control", "no-cache");
   res.setHeader("Connection", "keep-alive");
@@ -35,7 +30,7 @@ export const uploadVideos = async (
 
   console.log("Starting video upload");
 
-  await uploadMultipleVideos(files, body.titles, sendEvent)
+  await uploadMultipleVideos(files, sendEvent)
     .catch((err) => {
       console.log(`Video upload failed with error: ${err}`);
       res.write(`data: Error occurred during video upload: ${err}\n\n`);

@@ -23,7 +23,7 @@ export const scroll = (
     behavior: "smooth",
   });
 
-  setTimeout(checkScroll, 300); // Allow time for the scroll event
+  carousel.addEventListener("scrollend", checkScroll, { once: true });
 };
 
 export const calcMaxThumbnailCount = (thumbnailWidth: number, gap: number) => {
