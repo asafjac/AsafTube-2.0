@@ -6,14 +6,17 @@ export const ProgressBar: FC<ProgressBarProps> = ({ percentage }) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.progressBarContainer}>
-      <div
-        className={classes.progressBar}
-        style={{
-          width: `${Math.min(Math.max(percentage, 0), 100)}%`,
-          backgroundColor: percentage < 50 ? "#f39c12" : "#2ecc71",
-        }}
-      />
-    </div>
+    <>
+      <p>{`Uploading: ${Math.floor(percentage)}%`}</p>
+      <div className={classes.progressBarContainer}>
+        <div
+          className={classes.progressBar}
+          style={{
+            width: `${percentage}%`,
+            backgroundColor: "#2ecc71",
+          }}
+        />
+      </div>
+    </>
   );
 };

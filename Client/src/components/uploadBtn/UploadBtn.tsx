@@ -11,25 +11,30 @@ import { ProgressBar } from "../progressBar/ProgressBar.tsx";
 export const UploadBtn: FC<UploadBtnProps> = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const increaseProgress = (addedProgress: number) =>
+    setProgress((prevProgress) => addedProgress + prevProgress);
 
   const queryClient = useQueryClient();
 
-  const { mutate } = useMutation<Video[], DefaultError, File[]>({
-    mutationFn: uploadVideos,
-    onSuccess: (uploadedVideos) => {
-      queryClient.setQueryData(queryKeys.getVideos, (oldVideos: Video[]) => [
-        ...uploadedVideos,
-        ...oldVideos,
-      ]);
-      setIsLoading(false);
-      if (inputRef.current) inputRef.current.value = "";
-    },
-    onMutate: () => setIsLoading(true),
-  });
+  const onUploadSuccess = (uploadedVideos: Video[]) => {
+    queryClient.setQueryData(queryKeys.getVideos, (oldVideos: Video[]) => [
+      ...uploadedVideos,
+      ...oldVideos,
+    ]);
+
+    uploadCleanup();
+  };
+
+  const uploadCleanup = () => {
+    setIsLoading(false);
+    setProgress(0);
+    if (inputRef.current) inputRef.current.value = "";
+  };
 
   return (
     <div>
-      {isLoading && <Modal content={<ProgressBar percentage={50} />} />}
+      {isLoading && <Modal content={<ProgressBar percentage={progress} />} />}
       <input
         multiple
         type="file"
@@ -37,7 +42,14 @@ export const UploadBtn: FC<UploadBtnProps> = () => {
         hidden
         ref={inputRef}
         onChange={({ target }) => {
-          target.files && mutate(Array.from(target.files));
+          setIsLoading(true);
+          target.files &&
+            uploadVideos(
+              Array.from(target.files),
+              increaseProgress,
+              onUploadSuccess,
+              uploadCleanup,
+            );
         }}
       />
       <button

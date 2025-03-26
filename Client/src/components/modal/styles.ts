@@ -19,6 +19,7 @@ export const useStyles = createUseStyles({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    flexDirection: "column",
     width: "50%",
     height: "50%",
     padding: "20px",
