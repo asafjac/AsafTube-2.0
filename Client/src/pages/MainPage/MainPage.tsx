@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { MainPageProps } from "./types.ts";
 import Carousel from "../../components/carousel";
 import { useQuery } from "@tanstack/react-query";
-import { getVideos } from "../../Utils/queries.ts";
+import { getVideos } from "../../utils/queries.ts";
 import { queryKeys } from "../../utils/consts.ts";
 
 export const MainPage: FC<MainPageProps> = () => {
