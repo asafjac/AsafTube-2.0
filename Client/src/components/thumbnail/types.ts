@@ -1,5 +1,5 @@
 export type ThumbnailProps = {
-  image: string;
+  thumbnail: string;
   duration: number; // in seconds
   title: string;
   key?: number;

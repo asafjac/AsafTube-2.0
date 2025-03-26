@@ -5,7 +5,7 @@ import { formatDuration } from "./functions.ts";
 
 export const Thumbnail: FC<ThumbnailProps> = ({
   width,
-  image,
+  thumbnail,
   title,
   duration,
   key,
@@ -15,7 +15,7 @@ export const Thumbnail: FC<ThumbnailProps> = ({
   return (
     <div key={key} className={classes.thumbnail}>
       <div className={classes.thumbnailPhoto}>
-        <img src={image} alt={title} className={classes.image} />
+        <img src={thumbnail} alt={title} className={classes.image} />
         <div className={classes.duration}>{formatDuration(duration)}</div>
       </div>
       <div className={classes.title}>{title}</div>
