@@ -33,6 +33,8 @@ export const uploadVideos = async (
     res.write(`data: ${stepSize}\n\n`);
   };
 
+  console.log("Starting video upload");
+
   await uploadMultipleVideos(files, body.titles, sendEvent)
     .catch((err) =>
       res.write(`data: Error occurred during video upload: ${err}\n\n`),

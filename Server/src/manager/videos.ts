@@ -8,26 +8,33 @@ export const getAllVideos = getAllVideosRepo;
 export const uploadSingleVideo = async (
   video: Express.Multer.File,
   title: string,
-  sendEvent: (msg: string) => void,
+  sendEvent: () => void,
 ) => {
   const duration = await getVideoDuration(video);
-  sendEvent(`Duration Extracted for ${title}`);
+  sendEvent();
+  console.log(`Duration Extracted for ${title}`);
 
   const videoLink = await uploadToBlob(video.path, video.originalname);
-  sendEvent(`${title} been uploaded to blob`);
+  sendEvent();
+  console.log(`${title} been uploaded to blob`);
 
   const thumbnailPath = await generateThumbnail(video);
-  sendEvent(`thumbnail generated for ${title}`);
+  sendEvent();
+  console.log(`thumbnail generated for ${title}`);
+
   const thumbnailLink = await uploadToBlob(thumbnailPath, `${v4()}.png`);
-  sendEvent(`${title} thumbnail uploaded to blob`);
+  sendEvent();
+  console.log(`${title} thumbnail uploaded to blob`);
 
   await uploadVideoToDB(title, duration, videoLink, thumbnailLink);
-  sendEvent(`${title} uploaded to DB`);
+  sendEvent();
+  console.log(`${title} uploaded to DB`);
 
   // Remove files after it has been uploaded
   rmSync(video.path);
   rmSync(thumbnailPath);
-  sendEvent(`${title} temp files removed`);
+  sendEvent();
+  console.log(`${title} temp files removed`);
 };
 
 const getVideoDuration = (file: Express.Multer.File): Promise<number> =>
@@ -65,7 +72,7 @@ const generateThumbnail = (file: Express.Multer.File): Promise<string> => {
 export const uploadMultipleVideos = async (
   videos: Express.Multer.File[],
   titles: string[],
-  sendEvent: (msg: string) => void,
+  sendEvent: () => void,
 ) => {
   await Promise.all(
     titles.map(async (title, index) => {
