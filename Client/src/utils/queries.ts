@@ -1,6 +1,5 @@
 import axios from "axios";
 import { Video } from "./types.ts";
-import { getLastDataOfEventStream } from "./functions.ts";
 import { SSE } from "sse.js";
 
 export const getVideos = async (): Promise<Video[]> =>
