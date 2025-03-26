@@ -7,9 +7,9 @@ export const uploadVideoToDB = async (
   duration: number,
   videoLink: string,
   thumbnailLink: string,
-): Promise<void> => {
-  sql`
-        INSERT INTO "Videos"."Videos"
+): Promise<any> => {
+  return sql`
+        INSERT INTO "Videos"
             (title, duration, video_link, thumbnail)
         VALUES (${title}, ${duration}, ${videoLink}, ${thumbnailLink});
     `;
@@ -31,7 +31,7 @@ export const uploadToBlob = async (
 export const getAllVideos = async () => {
   return sql`
         SELECT id, title, duration, upload_time, video_link, thumbnail
-        FROM "Videos"."Videos"
+        FROM "Videos"
         ORDER BY upload_time DESC;
     `;
 };
