@@ -9,10 +9,21 @@ export const useStyles = createUseStyles<stylesClasses, stylesProps>({
     width: "100%",
   },
   button: {
-    height: 40,
+    transition: "width 0.5s",
+    "&:hover": {
+      width: `${50}px`,
+    },
+    "&:focus": {
+      outline: "none",
+    },
+    "&:active": {
+      width: `${60}px`,
+    },
+
+    aspectRatio: "1/1",
     width: 40,
-    background: "rgba(0, 0, 0, 0.7)",
-    color: "#fff",
+    background: "rgba(0,0,0,0.8)",
+    color: "#ffffff",
     border: "none",
     padding: "0",
     cursor: "pointer",

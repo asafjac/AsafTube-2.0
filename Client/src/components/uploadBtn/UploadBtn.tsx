@@ -1,12 +1,12 @@
 import React, { FC, useRef, useState } from "react";
 import { UploadBtnProps } from "./types.ts";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { uploadVideos } from "../../utils/queries.ts";
 import { queryKeys } from "../../utils/consts.ts";
 import { Video } from "../../utils/types.ts";
-import type { DefaultError } from "@tanstack/query-core";
 import { Modal } from "../modal/Modal.tsx";
 import { ProgressBar } from "../progressBar/ProgressBar.tsx";
+import { useStyles } from "./styles.ts";
 
 export const UploadBtn: FC<UploadBtnProps> = () => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -32,6 +32,8 @@ export const UploadBtn: FC<UploadBtnProps> = () => {
     if (inputRef.current) inputRef.current.value = "";
   };
 
+  const classes = useStyles();
+
   return (
     <div>
       {isLoading && <Modal content={<ProgressBar percentage={progress} />} />}
@@ -53,6 +55,7 @@ export const UploadBtn: FC<UploadBtnProps> = () => {
         }}
       />
       <button
+        className={classes.button}
         onClick={() => {
           inputRef.current?.click();
         }}

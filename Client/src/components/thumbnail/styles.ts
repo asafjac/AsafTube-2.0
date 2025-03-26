@@ -2,18 +2,22 @@ import { createUseStyles } from "react-jss";
 import { stylesClasses, stylesProps } from "./types.ts";
 
 export const useStyles = createUseStyles<stylesClasses, stylesProps>({
-  thumbnail: {
+  thumbnail: ({ width }) => ({
+    width: width,
     cursor: "pointer",
     userSelect: "none",
-    userD: "none",
-  },
-  thumbnailPhoto: ({ width }) => ({
+    transition: "width 0.3s",
+    "&:hover": {
+      width: `${width + 20}px`,
+    },
+  }),
+  thumbnailPhoto: {
+    width: "inherit",
     position: "relative",
-    width: width,
     aspectRatio: 16 / 9,
     overflow: "hidden",
     borderRadius: 8,
-  }),
+  },
   image: {
     width: "100%",
     height: "100%",

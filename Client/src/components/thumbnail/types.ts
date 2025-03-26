@@ -4,6 +4,7 @@ export type ThumbnailProps = {
   title: string;
   key?: number;
   width: number;
+  video_link: string;
 };
 
 export type stylesProps = {

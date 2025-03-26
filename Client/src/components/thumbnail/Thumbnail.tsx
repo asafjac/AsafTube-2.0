@@ -9,11 +9,18 @@ export const Thumbnail: FC<ThumbnailProps> = ({
   title,
   duration,
   key,
+  video_link,
 }) => {
   const classes = useStyles({ width });
 
   return (
-    <div key={key} className={classes.thumbnail}>
+    <div
+      key={key}
+      className={classes.thumbnail}
+      onClick={() => {
+        location.replace(video_link);
+      }}
+    >
       <div className={classes.thumbnailPhoto}>
         <img src={thumbnail} alt={title} className={classes.image} />
         <div className={classes.duration}>{formatDuration(duration)}</div>
