@@ -72,6 +72,7 @@ const generateThumbnail = (file: Express.Multer.File): Promise<string> => {
         timestamps: [`${percentageToScreenshot}%`],
         count: 1,
         folder: thumbnailFolder,
+        size: "200x113",
       })
       .on("end", () => {
         resolve(`${thumbnailFolder}/${filename}`);
